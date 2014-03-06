@@ -1,0 +1,27 @@
+{
+  "name": "cdn-with-local",
+  "description": "Load javascript from CDN or local via yepnope.js",
+  "version": "0.0.0",
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/bahmutov/cdn-with-local-fallback/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.2",
+    "grunt-contrib-jshint": "~0.8.0",
+    "grunt-nice-package": "~0.2.2",
+    "jshint-stylish": "~0.1.5",
+    "matchdep": "~0.3.0",
+    "time-grunt": "~0.2.10"
+  },
+  "homepage": "https://github.com/bahmutov/cdn-with-local-fallback",
+  "license": "MIT",
+  "main": "Gruntfile.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bahmutov/cdn-with-local-fallback.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

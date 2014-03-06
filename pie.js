@@ -1,6 +1,11 @@
+// jshint -W098
 function initApp() {
-    if (!window.angular) throw new Error('angular is undefined');
-    if (!window.d3) throw new Error('d3 is undefined');
+    if (!window.angular) {
+        throw new Error('angular is undefined');
+    }
+    if (!window.d3) {
+        throw new Error('d3 is undefined');
+    }
 
     /* global angular, d3 */
     angular.element(document).ready(function () {
@@ -21,7 +26,7 @@ function initApp() {
                 'data': '=chartData',
                 'onClick': '&'
             },
-            link: function (scope, element, attrs, ctrl) {
+            link: function (scope, element, attrs) {
                 var width = attrs.width || 300;
                 var height = attrs.height || 300;
 
@@ -53,7 +58,9 @@ function initApp() {
                 });
 
                 scope.$watch('data', function (d) {
-                    if (!d) return;
+                    if (!d) {
+                        return;
+                    }
                     arcs.data(pie(d))
                         .transition()
                         .attrTween('d', arcTween);
@@ -71,7 +78,7 @@ function initApp() {
     })
     .controller('PieController', function ($scope) {
         var randomData = function (size) {
-            return d3.range(size).map(function (d) {
+            return d3.range(size).map(function () {
                 return Math.ceil(Math.random() * 50);
             });
         };
