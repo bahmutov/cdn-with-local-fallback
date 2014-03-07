@@ -6,14 +6,11 @@
 <title>Pie chart</title>
 <script>
 if (window.performance.now) {
-    console.log("Using high performance timer");
     getTimestamp = function() { return window.performance.now(); };
 } else {
     if (window.performance.webkitNow) {
-        console.log("Using webkit high performance timer");
         getTimestamp = function() { return window.performance.webkitNow(); };
     } else {
-        console.log("Using low performance timer");
         getTimestamp = function() { return new Date().getTime(); };
     }
 }
@@ -21,20 +18,30 @@ if (window.performance.now) {
 <script src="vendor/yepnope.js"></script>
 <script>
 var start = getTimestamp();
-var timeout = Math.ceil(Math.random() * 200);
+var timeout = Math.ceil(Math.random() * 150);
 console.clear();
 console.log('download timeout', timeout + 'ms');
 if (!window.yepnope) throw new Error('Cannot find yepnope');
 
 function onD3loaded() {
-    console.assert(window.d3, 'cannot find d3');
+    if (!window.d3) {
+        throw new Error('cannot find d3');
+    }
     console.log('D3 is available after', getTimestamp() - start + 'ms');
+    if (window.d3 && window.angular) {
+        initApp();
+    }
 }
 function onAngularLoaded() {
-    console.assert(window.angular, 'cannot find angular');
-    console.log('angular is available, init app after', getTimestamp() - start + 'ms');
-    initApp();
+    if (!window.angular) {
+        throw new Error('cannot find angular');
+    }
+    console.log('angular is available after', getTimestamp() - start + 'ms');
+    if (window.d3 && window.angular) {
+        initApp();
+    }
 }
+
 yepnope([{
     test: window.d3,
     nope: ['timeout=' + timeout + '!http://d3js.org/d3.v3.min.js'],

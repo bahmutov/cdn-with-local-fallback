@@ -12,7 +12,8 @@
     "grunt-nice-package": "~0.2.2",
     "jshint-stylish": "~0.1.5",
     "matchdep": "~0.3.0",
-    "time-grunt": "~0.2.10"
+    "time-grunt": "~0.2.10",
+    "grunt-gh-pages": "~0.9.1"
   },
   "homepage": "https://github.com/bahmutov/cdn-with-local-fallback",
   "license": "MIT",

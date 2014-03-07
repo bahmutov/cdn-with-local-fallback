@@ -99,7 +99,15 @@ yepnope([{
 ```
 
 If the DNS lookup + library download from d3js.org does not succeed in less than 1000ms,
-local callback will start downloading.
+local callback will start downloading a local version.
+
+## Demo
+
+I created a simple <a href="http://glebbahmutov.com/cdn-with-local-fallback">demo</a>
+with a doughnut chart that requires both D3 and Angularjs
+scripts. The download limit is determined randomly, the download events are
+written to console window. If you refresh several times you should experience
+successful / failed CDN events and local download fallbacks.
 
 ### author
 
