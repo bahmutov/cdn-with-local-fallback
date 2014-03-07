@@ -56,7 +56,7 @@ yepnope([{
     }
 }, {
     test: window.angular,
-    nope: ['timeout=' + timeout + '!http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js'],
+    nope: ['timeout=' + timeout + '!http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.js'],
     complete: function () {
         if (!window.angular) {
             console.log('could not load angular from CDN, loading local');
