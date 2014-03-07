@@ -86,6 +86,8 @@ function initApp() {
     });
 
     angular.element(document).ready(function () {
-        angular.bootstrap(document, ['PieApp']);
+        setTimeout(function () {
+            angular.bootstrap(document, ['PieApp']);
+        }, 0);
     });
 }
