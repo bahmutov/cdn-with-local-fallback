@@ -58,16 +58,16 @@ yepnope([{
   // d3 test just like above
 }, {
   // angular library following the same approach
-  callback: bootstrapAppFunction
+  callback: initApp
 }])
 ```
 
 The only change required to make AngularJs work is switch from
 immediate ng-app code to initialization inside a separate function, for
-example called *bootstrapAppFunction*. An example function
+example called *initApp*. An example function
 
 ```js
-function bootstrapAppFunction() {
+function initApp() {
     angular.element(document).ready(function () {
         angular.bootstrap(document, ['PieApp']);
     });
@@ -90,6 +90,9 @@ function onAngularLoaded() {
     }
 }
 ```
+
+I only placed run once guard inside the *initApp* function to prevent
+multiple AngularJs bootstrapping (due to any timing issues or bugs in the loader script).
 
 ## Time limits
 
@@ -121,6 +124,11 @@ with a doughnut chart that requires both D3 and Angularjs
 scripts. The download limit is determined randomly, the download events are
 written to console window. If you refresh several times you should experience
 successful / failed CDN events and local download fallbacks.
+
+![cdn with local fallback](https://raw.github.com/bahmutov/talks/master/images/cdn-with-local-fallback.png)
+
+All code is available on [github](https://github.com/bahmutov/cdn-with-local-fallback),
+with main logic in the [index.html](https://github.com/bahmutov/cdn-with-local-fallback/blob/master/index.html#L45)
 
 ### author
 
