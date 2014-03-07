@@ -50,8 +50,9 @@ we try loading the local script included in the `vendor` folder.
 
 ## Loading several libraries
 
-yepnope can load multiple libraries in parallel, while giving the result in the correct
-sequential order. Just specify multiple test objects in the given array
+yepnope can load multiple libraries in parallel, but I found that the result is not ordered
+if any library is loaded via secondary fallback download.
+To load two scripts, just specify multiple test objects in the given array
 
 ```js
 yepnope([{
@@ -84,7 +85,9 @@ I check the conditions on every library download. If all pass, the application c
 ```js
 function onAngularLoaded() {
     ...
-    // same code in onD3Loaded
+    // same code in onD3Loaded function
+    ...
+    // call initApp independent of the ultimate load order
     if (window.d3 && window.angular) {
         initApp();
     }
