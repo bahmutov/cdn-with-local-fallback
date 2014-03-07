@@ -9,8 +9,6 @@ function initApp() {
 
     /* global angular, d3 */
     angular.element(document).ready(function () {
-        angular.bootstrap(document, ['PieApp']);
-
         angular.module('PieApp', [])
         .directive('chartData', function () {
             return {
@@ -88,4 +86,5 @@ function initApp() {
             };
         });
     });
+    angular.bootstrap(document, ['PieApp']);
 }
