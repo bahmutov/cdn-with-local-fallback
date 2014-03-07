@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+<meta charset="utf-8">
+<title>Pie chart</title>
+<script>
+if (window.performance.now) {
+    console.log("Using high performance timer");
+    getTimestamp = function() { return window.performance.now(); };
+} else {
+    if (window.performance.webkitNow) {
+        console.log("Using webkit high performance timer");
+        getTimestamp = function() { return window.performance.webkitNow(); };
+    } else {
+        console.log("Using low performance timer");
+        getTimestamp = function() { return new Date().getTime(); };
+    }
+}
+</script>
+<script src="vendor/yepnope.js"></script>
+<script>
+var start = getTimestamp();
+var timeout = Math.ceil(Math.random() * 200);
+console.clear();
+console.log('download timeout', timeout + 'ms');
+if (!window.yepnope) throw new Error('Cannot find yepnope');
+
+function onD3loaded() {
+    console.assert(window.d3, 'cannot find d3');
+    console.log('D3 is available after', getTimestamp() - start + 'ms');
+}
+function onAngularLoaded() {
+    console.assert(window.angular, 'cannot find angular');
+    console.log('angular is available, init app after', getTimestamp() - start + 'ms');
+    initApp();
+}
+yepnope([{
+    test: window.d3,
+    nope: ['timeout=' + timeout + '!http://d3js.org/d3.v3.min.js'],
+    complete: function () {
+        if (!window.d3) {
+            console.log('could not load d3 from CDN, loading local');
+            yepnope.injectJs('vendor/d3.v3.min.js', onD3loaded);
+        } else {
+            console.log('loaded D3 from CDN');
+            onD3loaded();
+        }
+    }
+}, {
+    test: window.angular,
+    nope: ['timeout=' + timeout + '!http://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js'],
+    complete: function () {
+        if (!window.angular) {
+            console.log('could not load angular from CDN, loading local');
+            yepnope.injectJs('vendor/angular.min.js', onAngularLoaded);
+        } else {
+            console.log('loaded angular from CDN');
+            onAngularLoaded();
+        }
+    }
+}]);
+</script>
+<style>
+    svg {
+        cursor: pointer;
+    }
+</style>
+</head>
+<body ng-cloak>
+<div ng-controller="PieController">
+    <h2>Pie chart</h2>
+    <div pie-chart
+         chart-data="chartData"
+         on-click="changeData()"
+         width="500"
+         height="300"
+         title="Click me!"></div>
+</div>
+<script src="pie.js"></script>
+</body>
+</html>
