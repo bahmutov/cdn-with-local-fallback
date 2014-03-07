@@ -60,7 +60,7 @@ yepnope([{
     complete: function () {
         if (!window.angular) {
             console.log('could not load angular from CDN, loading local');
-            yepnope.injectJs('vendor/angular.min.js', onAngularLoaded);
+            yepnope.injectJs('vendor/angular.js', onAngularLoaded);
         } else {
             console.log('loaded angular from CDN');
             onAngularLoaded();
