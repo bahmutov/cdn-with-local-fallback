@@ -78,6 +78,19 @@ function bootstrapAppFunction() {
 When using delayed bootstrapping like this, you don't need to declare `ng-app`
 attribute.
 
+To make sure our application only is initialized when all libraries are available,
+I check the conditions on every library download. If all pass, the application is bootstrapped.
+
+```js
+function onAngularLoaded() {
+    ...
+    // same code in onD3Loaded
+    if (window.d3 && window.angular) {
+        initApp();
+    }
+}
+```
+
 ## Time limits
 
 By default *yepnope* gives up on loading a script after 10 seconds.
