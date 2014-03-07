@@ -9,9 +9,9 @@ in the given time limit, the a local script is loaded.
 
 ## Goal
 
-Lets say we need **D3** library. We hope that by using
-CDN url (http://d3js.org/d3.v3.min.js) to reuse the d3 library
-the user might have in his browser cache. This is the good practice,
+Lets say we need **D3** library. We hope that by loading the library from
+CDN url (http://d3js.org/d3.v3.min.js) we reuse the d3 library
+the user might have in his browser cache. This is the good recommended practice,
 but sometimes it fails. For example, some of our clients in Asia
 experience CDN timeouts for common libraries: jQuery, angular.
 
@@ -50,8 +50,9 @@ we try loading the local script included in the `vendor` folder.
 
 ## Loading several libraries
 
-yepnope can load multiple libraries in parallel, while giving the result in the correct
-sequential order. Just specify multiple test objects in the given array
+yepnope can load multiple libraries in parallel, but I found that the result is not ordered
+if any library is loaded via secondary fallback download.
+To load two scripts, just specify multiple test objects in the given array
 
 ```js
 yepnope([{
@@ -63,8 +64,8 @@ yepnope([{
 ```
 
 The only change required to make AngularJs work is switch from
-immediate ng-app code to initialization inside a separate function, for
-example called *initApp*. An example function
+immediate *ng-app="module name"* code to bootstrapping inside a separate function, for
+example called *initApp*. An example:
 
 ```js
 function initApp() {
@@ -78,21 +79,37 @@ function initApp() {
 When using delayed bootstrapping like this, you don't need to declare `ng-app`
 attribute.
 
-To make sure our application only is initialized when all libraries are available,
-I check the conditions on every library download. If all pass, the application is bootstrapped.
+To make sure our application is only initialized when all libraries are available,
+I check the conditions on every library download. If all pass, the application can be bootstrapped.
 
 ```js
 function onAngularLoaded() {
     ...
-    // same code in onD3Loaded
+    // same code in onD3Loaded function
+    ...
+    // call initApp independent of the ultimate load order
     if (window.d3 && window.angular) {
         initApp();
     }
 }
 ```
 
-I only placed run once guard inside the *initApp* function to prevent
+I added *run once* guard inside the *initApp* function to prevent
 multiple AngularJs bootstrapping (due to any timing issues or bugs in the loader script).
+
+```js
+(function () {
+    var ranOnce = false;
+    function initApp() {
+        if (ranOnce) {
+            return;
+        }
+        ...
+        ranOnce = true;
+    }
+    window.initApp = initApp;
+}());
+```
 
 ## Time limits
 
